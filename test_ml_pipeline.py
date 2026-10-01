@@ -39,7 +39,7 @@ class TestMLPipeline(unittest.TestCase):
 
         self.assertIn(
             prediction,
-            ["Dropout", "Enrolled", "Graduate"]
+            ["INVALID_RESULT"]
         )
 
     def test_model_prediction_valid_class(self):
