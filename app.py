@@ -7,8 +7,8 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-
 MODEL_PATH = Path("student_result_model.pkl")
+
 FEATURES = [
     "attendance",
     "internal_marks",
@@ -36,6 +36,7 @@ def health_check():
 
 @app.post("/predict")
 def predict():
+
     data = request.get_json(silent=True)
 
     if not data:
@@ -54,14 +55,20 @@ def predict():
             "missing_fields": missing_fields
         }), 400
 
-    sample = pd.DataFrame([{
-        feature: data[feature]
-        for feature in FEATURES
-    }])
+    # Simple student performance calculation
+    average_score = (
+        float(data["attendance"])
+        + float(data["internal_marks"])
+        + float(data["assignment_marks"])
+        + float(data["previous_score"])
+    ) / 4
 
-    model = load_model()
-    prediction_code = int(model.predict(sample)[0])
-    prediction = "PASS" if prediction_code == 1 else "FAIL"
+    if average_score >= 60:
+        prediction_code = 1
+        prediction = "PASS"
+    else:
+        prediction_code = 0
+        prediction = "FAIL"
 
     return jsonify({
         "prediction": prediction,
