@@ -67,6 +67,7 @@ def train_model():
     print("\nModel saved as student_result_model.pkl")
 
     # Save metrics
+        # Save metrics
     metrics = {
         "accuracy": float(accuracy),
         "training_records": len(X_train),
@@ -78,6 +79,9 @@ def train_model():
 
     print("Metrics saved as metrics.json")
 
+    data.to_csv("student_results.csv", index=False)
+
+    print("Dataset saved as student_results.csv")
 
 if __name__ == "__main__":
     train_model()
