@@ -163,12 +163,12 @@ def predict():
         }), 400
 
     try:
-        average_score = (
+       average_score = (
             float(data["attendance"])
             + float(data["internal_marks"])
             + float(data["assignment_marks"])
             + float(data["previous_score"])
-        ) / 4
+            ) / 4
 
         if average_score >= 60:
             prediction_code = 1
